@@ -30,6 +30,20 @@ public class ToolCallingIT {
         System.out.println(response);
     }
 
+    @Test
+    void should_findTransactionsByPeriod_when_prompted() {
+        var chatClient = ChatClient.builder(openAiChatModel)
+                .defaultSystem("Você é um assistente financeiro.")
+                .defaultFunctions("findTransactionsByPeriod")
+                .build();
+
+        var response = chatClient.prompt("Quais foram minhas transações entre 2026-01-01 e 2026-12-31?")
+                .call().content();
+
+        assertThat(response).isNotNull();
+        System.out.println(response);
+    }
+    
     static class MathTools {
         @Tool(description = "soma dois números inteiros, a e b")
         public int sum(int a, int b) {

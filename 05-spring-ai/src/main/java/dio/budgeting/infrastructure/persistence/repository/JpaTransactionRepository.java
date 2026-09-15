@@ -30,3 +30,10 @@ public class JpaTransactionRepository implements TransactionRepository {
                 .toList();
     }
 }
+
+@Override
+public List<Transaction> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end) {
+    return entityRepository.findByCreatedAtBetween(start, end).stream()
+            .map(TransactionEntity::toDomain) // Ajuste conforme o método de conversão existente na sua classe
+            .toList();
+}
